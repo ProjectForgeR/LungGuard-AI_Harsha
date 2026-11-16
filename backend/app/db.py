@@ -84,6 +84,10 @@ def save_test_record(
     test_time = now.strftime("%H:%M:%S")
 
     metadata_str = json.dumps(raw_metadata or {})
+    if isinstance(recommended_next_steps, list):
+        steps_str = "\n".join(str(s) for s in recommended_next_steps)
+    else:
+        steps_str = str(recommended_next_steps or "")
 
     with get_db_connection() as conn:
         conn.execute("""
@@ -97,7 +101,7 @@ def save_test_record(
             test_id, user_id, test_type, created_at, test_date, test_time,
             detection_result, cancer_status, cancer_stage, float(confidence),
             image_url, abnormality_description, scan_summary,
-            recommended_next_steps, metadata_str
+            steps_str, metadata_str
         ))
         conn.commit()
 
@@ -119,21 +123,24 @@ def get_dashboard_stats(user_id: Optional[str] = None) -> Dict[str, Any]:
         # Cancer Detected
         cursor.execute("""
             SELECT COUNT(*) FROM test_records 
-            WHERE test_type = 'CT Scan' AND detection_result = 'Lung Cancer Detected'
+            WHERE test_type = 'CT Scan' 
+              AND (detection_result LIKE '%Cancer Detected%' AND detection_result NOT LIKE '%No%')
         """)
         cancer_detected = cursor.fetchone()[0]
 
         # No Cancer Detected
         cursor.execute("""
             SELECT COUNT(*) FROM test_records 
-            WHERE test_type = 'CT Scan' AND detection_result = 'No Lung Cancer Detected'
+            WHERE test_type = 'CT Scan' 
+              AND (detection_result LIKE '%No Lung Cancer%' OR detection_result LIKE '%No Cancer%')
         """)
         no_cancer_detected = cursor.fetchone()[0]
 
         # Inconclusive Results
         cursor.execute("""
             SELECT COUNT(*) FROM test_records 
-            WHERE test_type = 'CT Scan' AND detection_result LIKE '%Inconclusive%'
+            WHERE test_type = 'CT Scan' 
+              AND detection_result LIKE '%Inconclusive%'
         """)
         inconclusive = cursor.fetchone()[0]
 
