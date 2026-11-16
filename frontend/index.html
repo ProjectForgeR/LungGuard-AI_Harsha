@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LungGuard AI — AI-Powered Lung CT Image Analysis</title>
+  
+  <!-- Typography: Times New Roman -->
+  <link rel="stylesheet" href="css/style.css?v=20261116L" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230284C7'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z'/></svg>" />
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="nav-left">
+        <a href="index.html" class="brand-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="4" stroke="currentColor" stroke-width="2.2" fill="none"/>
+            <polygon points="12 7 16 12 12 17 8 12" fill="currentColor"/>
+          </svg>
+          <span>LungGuard AI</span>
+        </a>
+      </div>
+
+      <nav class="nav-menu">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="cancer-testing.html" class="nav-link">Lung Cancer Testing</a></li>
+          <li><a href="breathing-test.html" class="nav-link">Lung Breathing Test</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+          <li><a href="#about" class="nav-link">About Us</a></li>
+          <li><a href="#footer" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Clean Light / Dark Theme">☀️ Light</button>
+        <a href="cancer-testing.html" class="btn-nav">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+          <span>New AI Test</span>
+        </a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">
+          &#9776;
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="section hero-section" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            AI-Powered <span class="gradient-text">Lung CT Image Analysis</span>
+          </h1>
+
+          <p class="hero-desc">
+            LungGuard AI classifies axial lung CT slices into three distinct clinical categories: <strong>Benign</strong>, <strong>Malignant</strong>, and <strong>Normal</strong> using a fine-tuned EfficientNetB0 convolutional neural network.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="cancer-testing.html" class="btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+              Try AI Analysis
+            </a>
+            <a href="#anatomy" class="btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              Explore Lung Health
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-card-glow">
+            <div class="hero-preview-wrapper">
+              <video src="assets/lung_scan_preview.mp4?v=clean4" autoplay loop muted playsinline class="hero-preview-video" poster="assets/sample_malignant_malignant_case_(1).jpg"></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About LungGuard AI -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Understanding Pulmonary Classification</h2>
+        <p class="section-subtitle">
+          Computed Tomography (CT) provides high-resolution cross-sectional views of lung parenchyma. LungGuard AI evaluates tissue density patterns into three distinct clinical categories.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <!-- Normal Card -->
+        <div class="about-card">
+          <div class="card-icon normal">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3>Normal Tissue</h3>
+          <p>
+            Clear lung parenchymal attenuation with uniform aeration, symmetric bronchovascular arborization, and healthy pleural margins without pathological mass effects.
+          </p>
+          <ul class="feature-list">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Homogeneous radiolucent field</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Intact bronchoalveolar structure</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Absence of suspicious nodules</li>
+          </ul>
+        </div>
+
+        <!-- Benign Card -->
+        <div class="about-card">
+          <div class="card-icon benign">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h3>Benign Lesions</h3>
+          <p>
+            Non-cancerous pulmonary nodules including hamartomas, granulomas, or inflammatory scars. Typically present well-circumscribed contours and lack infiltrative margins.
+          </p>
+          <ul class="feature-list">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Smooth, sharply delineated borders</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Localized, non-invasive expansion</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Low metastatic potential</li>
+          </ul>
+        </div>
+
+        <!-- Malignant Card -->
+        <div class="about-card">
+          <div class="card-icon malignant">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <h3>Malignant Tumors</h3>
+          <p>
+            Invasive neoplastic pulmonary lesions such as adenocarcinoma, squamous cell carcinoma, or small cell carcinoma. Characterized by irregular, spiculated borders.
+          </p>
+          <ul class="feature-list">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Spiculated or lobulated edges</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Parenchymal or pleural invasion</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> High urgency clinical follow-up</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lung Anatomy Section -->
+  <section class="section" id="anatomy">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">The Architecture of the Human Lung</h2>
+        <p class="section-subtitle">
+          The respiratory system is an intricate branching network that channels air through descending conduits into millions of microscopic gas-exchange units.
+        </p>
+      </div>
+
+      <div class="anatomy-container">
+        <div class="anatomy-visual-card">
+          <div class="anatomy-img-wrap">
+            <img id="anatomy-main-img" src="assets/lungs_anatomy.jpg" alt="Comprehensive Human Lung Anatomy Diagram" />
+          </div>
+          <div class="anatomy-selector-row">
+            <button class="anatomy-sel-btn active" onclick="switchAnatomyView('assets/lungs_anatomy.jpg', 'Figure 1: Morphological anatomy of the tracheobronchial tree, lobes, and alveolar micro-architecture.', this)">Anatomy Diagram</button>
+            <button class="anatomy-sel-btn" onclick="switchAnatomyView('assets/lung_awareness_3d.jpg', 'Figure 2: 3D anatomical model of tracheobronchial arborization and dual pulmonary lobes.', this)">3D Model</button>
+            <button class="anatomy-sel-btn" onclick="switchAnatomyView('assets/lung_pathology_macro.jpg', 'Figure 3: High-resolution macro architecture of bronchial conduits and parenchymal tissue.', this)">Macro Conduits</button>
+          </div>
+          <p class="anatomy-caption" id="anatomy-caption-text">Figure 1: Morphological anatomy of the tracheobronchial tree, lobes, and alveolar micro-architecture.</p>
+        </div>
+
+        <script>
+          (function() {
+            var slides = [
+              { src: 'assets/lungs_anatomy.jpg', caption: 'Figure 1: Morphological anatomy of the tracheobronchial tree, lobes, and alveolar micro-architecture.' },
+              { src: 'assets/lung_awareness_3d.jpg', caption: 'Figure 2: 3D anatomical model of tracheobronchial arborization and dual pulmonary lobes.' },
+              { src: 'assets/lung_pathology_macro.jpg', caption: 'Figure 3: High-resolution macro architecture of bronchial conduits and parenchymal tissue.' }
+            ];
+            slides.forEach(function(s) { var im = new Image(); im.src = s.src; });
+            var idx = 0;
+            var timer = null;
+
+            function updateSlide(i) {
+              idx = i % slides.length;
+              var img = document.getElementById('anatomy-main-img');
+              var cap = document.getElementById('anatomy-caption-text');
+              var btns = document.querySelectorAll('.anatomy-sel-btn');
+              if (img) {
+                img.style.opacity = '0.35';
+                setTimeout(function() {
+                  img.src = slides[idx].src;
+                  img.style.opacity = '1';
+                }, 150);
+              }
+              if (cap) cap.textContent = slides[idx].caption;
+              btns.forEach(function(b, bIdx) {
+                if (bIdx === idx) b.classList.add('active');
+                else b.classList.remove('active');
+              });
+            }
+
+            function startTimer() {
+              if (timer) clearInterval(timer);
+              timer = setInterval(function() {
+                updateSlide(idx + 1);
+              }, 2000);
+            }
+
+            window.switchAnatomyView = function(src, caption, btn) {
+              var btns = Array.from(document.querySelectorAll('.anatomy-sel-btn'));
+              var clickIdx = btns.indexOf(btn);
+              if (clickIdx !== -1) idx = clickIdx;
+              updateSlide(idx);
+              startTimer();
+            };
+
+            startTimer();
+          })();
+        </script>
+
+        <div class="anatomy-tabs">
+          <div class="anatomy-tab-item active">
+            <div class="tab-head">
+              <h4>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                Lungs & Lobes
+              </h4>
+              <span class="tab-badge">Gross Anatomy</span>
+            </div>
+            <p>
+              The human respiratory system features asymmetric lungs: the <strong>Right Lung</strong> with 3 lobes (Superior, Middle, Inferior) and the <strong>Left Lung</strong> with 2 lobes (Superior, Inferior) accommodating the cardiac notch. Double-layered pleura facilitates frictionless thoracic expansion.
+            </p>
+          </div>
+
+          <div class="anatomy-tab-item">
+            <div class="tab-head">
+              <h4>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Trachea & Primary Bronchi
+              </h4>
+              <span class="tab-badge">Conduction Zone</span>
+            </div>
+            <p>
+              The trachea bifurcates at the carina into the right and left main bronchi. C-shaped cartilaginous rings maintain airway patency, while pseudostratified ciliated columnar epithelium acts as an escalator removing inhaled particulate matter.
+            </p>
+          </div>
+
+          <div class="anatomy-tab-item">
+            <div class="tab-head">
+              <h4>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                Bronchioles & Terminal Airways
+              </h4>
+              <span class="tab-badge">Transitional Zone</span>
+            </div>
+            <p>
+              As airways branch past generation 10, cartilage disappears, transitioning into bronchioles encased in smooth muscle. Bronchoconstriction and bronchodilation in these conduits govern localized ventilation distribution.
+            </p>
+          </div>
+
+          <div class="anatomy-tab-item">
+            <div class="tab-head">
+              <h4>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                Alveoli & Capillary Bed
+              </h4>
+              <span class="tab-badge">Respiratory Zone</span>
+            </div>
+            <p>
+              Over 300 to 500 million microscopic alveoli provide approximately 70 m² of surface area for passive gas exchange. Type I pneumocytes form the thin blood-air barrier, while Type II cells secrete surfactant to prevent end-expiratory atelectasis.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lung Breathing Test Introduction Section -->
+  <section class="section" id="breathing-preview" style="background: var(--bg-card); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Lung Breathing Health & Capacity Assessment</h2>
+        <p class="section-subtitle">
+          Evaluate respiratory wellness, practice guided pulmonary endurance exercises, and track clinical spirometry measurements for proactive lung health.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 3.5rem; align-items: center;">
+        <!-- Left: Visual Illustration -->
+        <div style="background: var(--bg-app); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-md); position: relative; overflow: hidden;">
+          <div style="aspect-ratio: 4/3; border-radius: var(--radius-md); overflow: hidden; background: #000;">
+            <img src="assets/lung_hero_artistic.jpg" alt="Pulmonary Arborization & Respiratory Health" style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
+          <div style="margin-top: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <strong style="display: block; font-size: 1.05rem; color: var(--text-main);">Pulmonary Function & Vitality</strong>
+              <span style="font-size: 0.82rem; color: var(--text-muted);">Guided Respiratory Feedback & PFT Metrics</span>
+            </div>
+            <span class="table-badge verified" style="font-size: 0.78rem;">Interactive Module</span>
+          </div>
+        </div>
+
+        <!-- Right: Information & Benefits -->
+        <div>
+          <h3 style="font-size: 1.6rem; font-weight: 800; color: var(--text-main); margin-bottom: 1rem;">
+            Why Monitor Your Breathing Function?
+          </h3>
+          <p style="font-size: 0.98rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.5rem;">
+            Breathing is your body’s primary engine for oxygen delivery and cellular longevity. Early changes in airway resistance or lung compliance often manifest subtly during routine activities before significant clinical symptoms arise.
+          </p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 2rem;">
+            <div style="background: var(--bg-card-hover); padding: 1rem 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <div style="font-size: 1.35rem; margin-bottom: 0.35rem;">🫁</div>
+              <strong style="display: block; font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.25rem;">Capacity Awareness</strong>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; margin: 0;">Track vital capacity and diaphragmatic expansion through guided cadence pacing.</p>
+            </div>
+
+            <div style="background: var(--bg-card-hover); padding: 1rem 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <div style="font-size: 1.35rem; margin-bottom: 0.35rem;">⏱️</div>
+              <strong style="display: block; font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.25rem;">Hold Endurance</strong>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; margin: 0;">Measure breath-hold intervals to gauge alveolar gas exchange tolerance over time.</p>
+            </div>
+
+            <div style="background: var(--bg-card-hover); padding: 1rem 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <div style="font-size: 1.35rem; margin-bottom: 0.35rem;">📊</div>
+              <strong style="display: block; font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.25rem;">Spirometry Support</strong>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; margin: 0;">Input FEV1, FVC, and PEF clinical spirometer values for instant GOLD criteria assessment.</p>
+            </div>
+
+            <div style="background: var(--bg-card-hover); padding: 1rem 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <div style="font-size: 1.35rem; margin-bottom: 0.35rem;">📈</div>
+              <strong style="display: block; font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.25rem;">History & Trends</strong>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; margin: 0;">Every assessment is permanently saved to your LungGuard Dashboard for clinical review.</p>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <a href="breathing-test.html" class="btn-primary" style="padding: 0.75rem 1.75rem; font-size: 1rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+              Start Breathing Test
+            </a>
+            <a href="breathing-test.html#learn-more" class="btn-secondary" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              Learn More
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disease Awareness & Risk Factors -->
+  <section class="section" id="awareness">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Pulmonary Conditions & Key Risk Factors</h2>
+        <p class="section-subtitle">
+          Early detection of pulmonary lesions remains the primary determinant of long-term prognosis. Understanding environmental and behavioral carcinogens empowers clinical awareness.
+        </p>
+      </div>
+
+      <div class="awareness-grid">
+        <div class="risk-card">
+          <span class="risk-icon">🚬</span>
+          <h4>Tobacco & Secondhand Smoke</h4>
+          <p>
+            Cigarette smoking is responsible for 80% to 90% of lung cancer cases worldwide. Polycyclic aromatic hydrocarbons and nitrosamines directly induce DNA mutations in bronchial epithelium.
+          </p>
+        </div>
+
+        <div class="risk-card">
+          <span class="risk-icon">☢️</span>
+          <h4>Radon Gas Exposure</h4>
+          <p>
+            The leading cause of lung cancer among non-smokers. Radon-222 is an odorless radioactive gas emanating from natural soil decay that accumulates in basements and enclosed buildings.
+          </p>
+        </div>
+
+        <div class="risk-card">
+          <span class="risk-icon">🏭</span>
+          <h4>Occupational Carcinogens</h4>
+          <p>
+            Industrial inhalation of asbestos fibers, crystalline silica, diesel exhaust, arsenic, and chromium damages alveolar architecture and creates chronic pulmonary fibrotic changes.
+          </p>
+        </div>
+
+        <div class="risk-card">
+          <span class="risk-icon">🧬</span>
+          <h4>Pre-existing Lung Disease</h4>
+          <p>
+            Chronic Obstructive Pulmonary Disease (COPD), idiopathic pulmonary fibrosis (IPF), and genetic familial susceptibility significantly amplify individual baseline risk.
+          </p>
+        </div>
+      </div>
+
+      <!-- Visual Awareness & Educational Posters Showcase -->
+      <div class="posters-showcase">
+        <div class="posters-header">
+          <h3 class="posters-title">Pulmonary Health & Clinical Awareness Gallery</h3>
+          <p class="posters-subtitle">
+            Educational posters and scientific visual models highlighting early detection, lifestyle protection, tracheobronchial branching, and silent pathology progression. Click any poster to inspect full size.
+          </p>
+        </div>
+
+        <div class="posters-grid">
+          <!-- Poster 1: 3D Pulmonary Overview -->
+          <div class="poster-card" onclick="openPosterModal('assets/lung_awareness_3d.jpg', 'Lungs Disease Predative — 3D Structural Overview', 'High-fidelity anatomical model comparing healthy pulmonary lobes with diseased parenchymal tissue, demonstrating tracheobronchial arborization and silent symptom onset.', '3D Anatomy')">
+            <div class="poster-img-wrap">
+              <img src="assets/lung_awareness_3d.jpg" alt="3D Lung Anatomy & Disease Overview" />
+              <div class="poster-overlay">
+                <span class="poster-zoom-btn">🔍 View Full Poster</span>
+              </div>
+            </div>
+            <div class="poster-info">
+              <span class="poster-tag">3D Clinical View</span>
+              <h4>Structural Disease Progression</h4>
+              <p>Tracheobronchial branching and silent developmental risks.</p>
+            </div>
+          </div>
+
+          <!-- Poster 2: Disease Predative Green Guide -->
+          <div class="poster-card" onclick="openPosterModal('assets/lung_prevention_guide.jpg', 'Disease Predative — Early Action Saves Lives', 'Clinical awareness guide detailing the essential steps: smoke avoidance, air pollution protection, active cardio health, and recognizing early respiratory signs.', 'Prevention Protocol')">
+            <div class="poster-img-wrap">
+              <img src="assets/lung_prevention_guide.jpg" alt="Disease Predative Prevention Guide" />
+              <div class="poster-overlay">
+                <span class="poster-zoom-btn">🔍 View Full Poster</span>
+              </div>
+            </div>
+            <div class="poster-info">
+              <span class="poster-tag">Early Action</span>
+              <h4>Early Action Saves Lives</h4>
+              <p>Key guidelines for air quality, smoke avoidance, and fitness.</p>
+            </div>
+          </div>
+
+          <!-- Poster 3: The Living Breath Artistic -->
+          <div class="poster-card" onclick="openPosterModal('assets/lung_hero_artistic.jpg', 'The Living Breath — Pulmonary Tree of Life', 'Artistic visualization representing bronchial networks as living botanical trees channeling vitality, clean oxygen, and environmental wellness.', 'Living Breath')">
+            <div class="poster-img-wrap">
+              <img src="assets/lung_hero_artistic.jpg" alt="Artistic Lung Tree of Life" />
+              <div class="poster-overlay">
+                <span class="poster-zoom-btn">🔍 View Full Poster</span>
+              </div>
+            </div>
+            <div class="poster-info">
+              <span class="poster-tag">Vitality</span>
+              <h4>Arborization & Vitality</h4>
+              <p>Conceptual rendering of the respiratory network and atmospheric balance.</p>
+            </div>
+          </div>
+
+          <!-- Poster 4: Macro Pathology -->
+          <div class="poster-card" onclick="openPosterModal('assets/lung_pathology_macro.jpg', 'Bronchial Micro-Pathology & Parenchymal Care', 'High-definition macro visualization of bronchial conduits, cellular alveolar clusters, and structural parenchymal changes.', 'Macro Pathology')">
+            <div class="poster-img-wrap">
+              <img src="assets/lung_pathology_macro.jpg" alt="Bronchial Micro-Pathology" />
+              <div class="poster-overlay">
+                <span class="poster-zoom-btn">🔍 View Full Poster</span>
+              </div>
+            </div>
+            <div class="poster-info">
+              <span class="poster-tag">Pathology</span>
+              <h4>Bronchial Conduits & Care</h4>
+              <p>Deep inspection of parenchymal architecture and tissue defense.</p>
+            </div>
+          </div>
+
+          <!-- Poster 5: Lifestyle & Daily Care -->
+          <div class="poster-card" onclick="openPosterModal('assets/lung_lifestyle_illustration.jpg', 'Lifestyle, Nutrition & Daily Respiratory Health', 'Illustrated wellness guide outlining the vital trifecta of cardiovascular activity, hydration, nutritious diet, and smoking cessation.', 'Daily Habits')">
+            <div class="poster-img-wrap">
+              <img src="assets/lung_lifestyle_illustration.jpg" alt="Lifestyle & Respiratory Health" />
+              <div class="poster-overlay">
+                <span class="poster-zoom-btn">🔍 View Full Poster</span>
+              </div>
+            </div>
+            <div class="poster-info">
+              <span class="poster-tag">Wellness</span>
+              <h4>Lifestyle, Activity & Nutrition</h4>
+              <p>Daily habits to strengthen lung function and alveolar health.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CT Scan Gallery -->
+  <section class="section" id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Authentic IQ-OTH-NCCD CT Scan Gallery</h2>
+        <p class="section-subtitle">
+          Explore genuine axial CT images extracted directly from the Iraq Oncology Teaching Hospital / National Center for Cancer Diseases benchmark dataset used in model training.
+        </p>
+      </div>
+
+      <div class="gallery-filters">
+        <button class="filter-btn active" data-filter="all">All Benchmark Scans</button>
+        <button class="filter-btn" data-filter="normal">Normal Cases</button>
+        <button class="filter-btn" data-filter="benign">Benign Cases</button>
+        <button class="filter-btn" data-filter="malignant">Malignant Cases</button>
+      </div>
+
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">How LungGuard AI Processes CT Images</h2>
+        <p class="section-subtitle">
+          From binary upload to multi-class probabilistic assessment, our deep learning pipeline mirrors the exact preprocessing parameters verified in the research notebook.
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-number">1</span>
+          <h4>Image Upload & Ingestion</h4>
+          <p>
+            Axial lung CT scans are submitted via the interactive studio. The backend enforces file format headers (JPEG/PNG) and strict size constraints (up to 10 MB).
+          </p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-number">2</span>
+          <h4>Precise Preprocessing</h4>
+          <p>
+            The image is converted to 3-channel RGB and resized to 224 × 224 pixels with Lanczos resampling. In accordance with the notebook, raw pixel values [0, 255] are retained.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-number">3</span>
+          <h4>EfficientNetB0 Inference</h4>
+          <p>
+            The pre-trained CNN extracts multiscale spatial features across inverted residual blocks, followed by Global Average Pooling and a 30% dropout regularization layer.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-number">4</span>
+          <h4>Softmax Probabilities</h4>
+          <p>
+            A 3-node dense layer outputs calibrated softmax probabilities for Benign, Malignant, and Normal classes, returning the prediction and latency breakdown.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal Lightbox for Gallery Inspection -->
+  <div class="modal" id="image-modal">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+      <div class="modal-img-wrap">
+        <img id="modal-img" src="" alt="Enlarged CT Scan" />
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <h3 id="modal-title" style="font-size: 1.25rem; font-weight: 700;"></h3>
+          <span id="modal-class" class="class-pill"></span>
+        </div>
+        <p id="modal-desc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.55;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Model Setup Modal (Guidance when model file needs to be placed) -->
+  <div class="modal" id="model-setup-modal">
+    <div class="modal-content" style="max-width: 600px;">
+      <button class="modal-close-btn" id="model-modal-close-btn">&times;</button>
+      <div class="modal-body" style="padding: 2.25rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--class-benign-bg); border: 1px solid var(--class-benign-border); display: flex; align-items: center; justify-content: center; color: var(--class-benign);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div>
+            <h3 style="font-size: 1.35rem; font-weight: 800;">Model File Required</h3>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">EfficientNetB0 Weights (.keras)</span>
+          </div>
+        </div>
+
+        <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.25rem;">
+          LungGuard AI avoids dummy predictions and runs the genuine trained EfficientNetB0 neural network. To complete the setup, please provide the <strong>LungGuard_AI_Final.keras</strong> model saved from your Colab notebook.
+        </p>
+
+        <div style="background: var(--bg-input); border: 1px solid var(--border-card); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.5rem;">
+          <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-main);">Quick 2-Step Setup:</h4>
+          <ol style="padding-left: 1.25rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.65;">
+            <li>Open your <strong>Google Drive</strong>: Go to folder <code>LungGuard_AI &gt; Models</code> and download <strong>LungGuard_AI_Final.keras</strong> (~16.3 MB).</li>
+            <li>Copy the downloaded file into your local project models folder:<br/>
+              <code style="display: block; background: var(--bg-card); padding: 0.5rem 0.75rem; border-radius: 6px; margin-top: 0.4rem; font-size: 0.82rem; word-break: break-all; border: 1px solid var(--border-subtle);">Harsha_LUNG_AI\models\LungGuard_AI_Final.keras</code>
+            </li>
+          </ol>
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn-primary" id="btn-recheck-model" style="flex: 1; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            Check Again & Connect
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="2" y="4" width="20" height="16" rx="4" stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <polygon points="12 7 16 12 12 17 8 12" fill="currentColor"/>
+            </svg>
+            <span>LungGuard AI</span>
+          </div>
+          <p>
+            An intelligent clinical AI system engineered for thoracic CT image classification and pulmonary health evaluation using deep transfer learning.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Project Overview & Content</h5>
+          <div class="footer-content-box">
+            <p>
+              LungGuard AI integrates computerized tomography analysis with interactive spirometry assessments to aid early detection of pulmonary malignancies.
+            </p>
+            <p>
+              Developed as an advanced academic research prototype by <strong>Harsha</strong>, bridging cutting-edge deep learning with practical clinical diagnostics.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Contact Details</h5>
+          <ul class="footer-contact-list">
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <div>
+                <strong>Developer / Researcher</strong>
+                <span>Harsha (AI & Deep Learning)</span>
+              </div>
+            </li>
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <div>
+                <strong>Email Address</strong>
+                <a href="mailto:harsha.lungguard.ai@gmail.com">harsha.lungguard.ai@gmail.com</a>
+              </div>
+            </li>
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <div>
+                <strong>Phone / Contact</strong>
+                <a href="tel:+919177000000">+91 91770 XXXXX</a>
+              </div>
+            </li>
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div>
+                <strong>Location & Affiliation</strong>
+                <span>India • AI & Medical Imaging Research</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>LungGuard AI &copy; 2026. Academic & Research Prototype. Never use for emergency or clinical diagnosis.</p>
+        <p>Built with FastAPI, TensorFlow/Keras, and Modern Web Standards.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Script -->
+  <script src="js/app.js?v=20261116h"></script>
+</body>
+</html>

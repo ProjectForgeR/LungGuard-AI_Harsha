@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lung Breathing Test & Spirometry Assessment — LungGuard AI</title>
+  
+  <link rel="stylesheet" href="css/style.css?v=20261116L" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230284C7'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z'/></svg>" />
+  
+  <style>
+    /* Breathing Exercise Circle Animation */
+    .breath-orb-container {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      margin: 2rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .breath-orb-outer {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--primary-light) 0%, rgba(2, 132, 199, 0.05) 70%);
+      border: 2px dashed var(--primary-border);
+      transition: all 4s ease-in-out;
+    }
+    .breath-orb {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--teal-accent) 100%);
+      box-shadow: 0 0 30px var(--primary-glow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      transition: transform 4s ease-in-out, background-color 0.5s ease;
+      z-index: 2;
+    }
+    .breath-orb.inhale {
+      transform: scale(1.45);
+      background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+    }
+    .breath-orb.hold {
+      transform: scale(1.45);
+      background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);
+    }
+    .breath-orb.exhale {
+      transform: scale(0.9);
+      background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+    }
+    .breath-orb.rest {
+      transform: scale(1);
+    }
+    .breath-phase-text {
+      font-size: 1.35rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .breath-timer-text {
+      font-size: 1.85rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-top: 0.25rem;
+    }
+    .pft-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    .pft-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .pft-field label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .pft-field input {
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 1rem;
+    }
+    .pft-field input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .tabs-header {
+      display: flex;
+      gap: 0.75rem;
+      border-bottom: 2px solid var(--border-subtle);
+      margin-bottom: 2rem;
+    }
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: -2px;
+    }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="nav-left">
+        <a href="index.html" class="brand-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="4" stroke="currentColor" stroke-width="2.2" fill="none"/>
+            <polygon points="12 7 16 12 12 17 8 12" fill="currentColor"/>
+          </svg>
+          <span>LungGuard AI</span>
+        </a>
+      </div>
+
+      <nav class="nav-menu">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="cancer-testing.html" class="nav-link">Lung Cancer Testing</a></li>
+          <li><a href="breathing-test.html" class="nav-link active">Lung Breathing Test</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+          <li><a href="index.html#about" class="nav-link">About Us</a></li>
+          <li><a href="index.html#footer" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Clean Light / Dark Theme">☀️ Light</button>
+        <a href="cancer-testing.html" class="btn-nav">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+          <span>New AI Test</span>
+        </a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">
+          &#9776;
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="section" style="padding: 3.5rem 0 2rem 0; background: radial-gradient(circle at 90% 20%, rgba(13, 148, 136, 0.08) 0%, transparent 45%), var(--bg-card); border-bottom: 1px solid var(--border-subtle);">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem;">
+        <div>
+          <h1 style="font-size: 2.3rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">
+            Lung Breathing Assessment & PFT Monitoring
+          </h1>
+          <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 720px; line-height: 1.6;">
+            Engage in guided diaphragmatic pacing exercises, track breath-hold endurance, or record clinical spirometer measurements (FEV1, FVC, PEF) into your persistent health records.
+          </p>
+        </div>
+        <div>
+          <a href="dashboard.html" class="btn-secondary" style="font-size: 0.92rem; padding: 0.6rem 1.25rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Breathing Assessment History
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Breathing Module -->
+  <section class="section" style="padding: 2.5rem 0 5rem 0;">
+    <div class="container">
+      
+      <!-- Module Tabs -->
+      <div class="tabs-header">
+        <button class="tab-btn active" id="tab-guided-btn" onclick="switchBreathingTab('guided')">
+          🫁 1. Guided Breathing Exercise
+        </button>
+        <button class="tab-btn" id="tab-spirometry-btn" onclick="switchBreathingTab('spirometry')">
+          📊 2. Clinical Spirometry & PFT Input
+        </button>
+      </div>
+
+      <!-- TAB 1: GUIDED BREATHING EXERCISE -->
+      <div id="tab-guided-content" style="display: block;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+          <!-- Visual Breathing Guide -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 2.25rem; text-align: center; box-shadow: var(--shadow-md);">
+            <h3 style="font-size: 1.45rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">
+              Guided Pacing Cycle
+            </h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; max-width: 380px; margin: 0 auto;">
+              Follow the expanding visual guide: Inhale deeply through your nose, hold steadily, and exhale gently through pursed lips.
+            </p>
+
+            <!-- Visual Animated Orb -->
+            <div class="breath-orb-container">
+              <div class="breath-orb-outer" id="breath-orb-outer"></div>
+              <div class="breath-orb" id="breath-orb">
+                <span class="breath-phase-text" id="breath-phase-text">Ready</span>
+                <span class="breath-timer-text" id="breath-timer-text">0s</span>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+              <button class="btn-primary" id="btn-start-breathing" onclick="toggleBreathingExercise()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span id="breath-btn-label">Start Guided Exercise</span>
+              </button>
+              <button class="btn-secondary" id="btn-reset-breathing" onclick="resetBreathingExercise()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
+                Reset
+              </button>
+            </div>
+
+            <!-- Real-time metrics -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+              <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-dim); display: block; font-weight: 700;">Completed Cycles</span>
+                <strong id="metric-cycles" style="font-size: 1.5rem; color: var(--primary);">0</strong>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-dim); display: block; font-weight: 700;">Elapsed Time</span>
+                <strong id="metric-elapsed" style="font-size: 1.5rem; color: var(--text-main);">00:00</strong>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-dim); display: block; font-weight: 700;">Cadence Ratio</span>
+                <strong style="font-size: 1.5rem; color: var(--teal-accent);">4-4-4</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Breath Hold & Save Card -->
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- Breath-Hold Endurance Card -->
+            <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-sm);">
+              <h4 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">
+                Voluntary Breath-Hold Endurance
+              </h4>
+              <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 1.25rem;">
+                Take a deep, comfortable breath in, press <strong>Start Hold</strong>, and sustain without forcing until you feel the natural urge to breathe. Press <strong>Release</strong> when finished.
+              </p>
+
+              <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-card-hover); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 1.25rem;">
+                <div>
+                  <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700;">Sustained Duration</span>
+                  <div style="font-size: 2.2rem; font-weight: 800; color: var(--teal-accent);" id="hold-timer-display">0.0s</div>
+                </div>
+                <div style="display: flex; gap: 0.75rem;">
+                  <button class="btn-primary" id="btn-hold-toggle" onclick="toggleHoldTimer()" style="padding: 0.65rem 1.25rem;">Start Hold</button>
+                </div>
+              </div>
+
+              <!-- Save Assessment Button -->
+              <button class="btn-primary" id="btn-save-guided" onclick="saveGuidedAssessment()" style="width: 100%; justify-content: center; font-size: 0.95rem; padding: 0.8rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Save Breathing Exercise to Dashboard
+              </button>
+
+              <div id="guided-save-alert" style="display: none; margin-top: 1rem; padding: 0.85rem; border-radius: var(--radius-sm); font-size: 0.88rem; background: var(--class-normal-bg); border: 1px solid var(--class-normal-border); color: var(--class-normal);">
+                Assessment saved successfully! <a href="dashboard.html" style="text-decoration: underline; font-weight: 700;">View in Dashboard</a>.
+              </div>
+            </div>
+
+            <!-- Mandatory Ethical Medical Notice -->
+            <div class="medical-disclaimer-callout">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <p>
+                <strong>Notice:</strong> This feature is a guided breathing exercise designed to promote thoracic flexibility and stress management. <em>A timer or breath-hold duration cannot determine diagnostic clinical lung volume.</em> Diagnostic measurements require calibrated medical spirometry.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: CLINICAL SPIROMETRY & PFT INPUT -->
+      <div id="tab-spirometry-content" style="display: none;">
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: start;">
+          <!-- Form -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 2.25rem; box-shadow: var(--shadow-md);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+              <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main);">
+                Clinical Spirometry (PFT) Values
+              </h3>
+              <span class="table-badge verified">GOLD Protocol</span>
+            </div>
+            <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 1.75rem;">
+              If you have performed a clinical Pulmonary Function Test (PFT) or own a calibrated home spirometer, input your measurements below for algorithmic assessment and persistent record tracking.
+            </p>
+
+            <form id="spirometry-form" onsubmit="handleSpirometrySubmit(event)">
+              <div class="pft-form-grid">
+                <div class="pft-field">
+                  <label for="pft-fev1">FEV₁ (Liters) *</label>
+                  <input type="number" step="0.01" min="0.5" max="8.0" id="pft-fev1" placeholder="e.g. 3.20" required oninput="calculatePftRatio()" />
+                  <span style="font-size: 0.74rem; color: var(--text-dim);">Forced Expiratory Volume in 1 second</span>
+                </div>
+
+                <div class="pft-field">
+                  <label for="pft-fvc">FVC (Liters) *</label>
+                  <input type="number" step="0.01" min="0.5" max="9.0" id="pft-fvc" placeholder="e.g. 4.00" required oninput="calculatePftRatio()" />
+                  <span style="font-size: 0.74rem; color: var(--text-dim);">Forced Vital Capacity</span>
+                </div>
+
+                <div class="pft-field">
+                  <label for="pft-ratio">FEV₁ / FVC Ratio (%)</label>
+                  <input type="number" step="0.1" min="10" max="100" id="pft-ratio" placeholder="Auto-calculated (e.g. 80.0)" />
+                  <span style="font-size: 0.74rem; color: var(--text-dim);">Tiffeneau-Pinelli Index</span>
+                </div>
+
+                <div class="pft-field">
+                  <label for="pft-pef">Peak Expiratory Flow (PEF, L/min)</label>
+                  <input type="number" step="1" min="50" max="900" id="pft-pef" placeholder="e.g. 450" />
+                  <span style="font-size: 0.74rem; color: var(--text-dim);">Maximum speed of expiration</span>
+                </div>
+              </div>
+
+              <div class="pft-field" style="margin-top: 1.25rem;">
+                <label for="pft-notes">Clinical Observations / Notes (Optional)</label>
+                <input type="text" id="pft-notes" placeholder="e.g. Routine post-bronchodilator assessment, clear symptoms" />
+              </div>
+
+              <button type="submit" class="btn-primary" style="margin-top: 1.75rem; width: 100%; justify-content: center; font-size: 0.95rem; padding: 0.8rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+                Calculate Assessment & Save to Dashboard
+              </button>
+            </form>
+          </div>
+
+          <!-- Live Result Card -->
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-sm);" id="spirometry-result-card">
+              <span class="table-badge verified" id="spiro-badge">Awaiting Input</span>
+              <h4 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin: 0.6rem 0;" id="spiro-result-title">
+                Spirometry Interpretation
+              </h4>
+              <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;" id="spiro-result-desc">
+                Enter your measured clinical spirometry values on the left. The system evaluates whether FEV₁/FVC meets the $\ge 70\%$ threshold defined under the Global Initiative for Chronic Obstructive Lung Disease (GOLD).
+              </p>
+
+              <div id="spiro-success-box" style="display: none; margin-top: 1rem; padding: 0.85rem; border-radius: var(--radius-sm); font-size: 0.88rem; background: var(--class-normal-bg); border: 1px solid var(--class-normal-border); color: var(--class-normal);">
+                Record saved successfully to database! <a href="dashboard.html" style="text-decoration: underline; font-weight: 700;">View in Testing History</a>.
+              </div>
+            </div>
+
+            <div class="medical-disclaimer-callout">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <p>
+                <strong>Clinical Disclaimer:</strong> Spirometry values must be interpreted by a licensed physician in conjunction with patient age, sex, height, ethnicity, and clinical history. This computational tool never issues a standalone medical diagnosis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Educational & Learn More Section -->
+  <section class="section" id="learn-more" style="background: var(--bg-card); border-top: 1px solid var(--border-subtle); padding: 4.5rem 0;">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Understanding Pulmonary Function Testing (PFT)</h2>
+        <p class="section-subtitle">
+          How spirometry parameters guide clinical evaluation of obstructive and restrictive lung disorders.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+        <div style="background: var(--bg-app); border: 1px solid var(--border-card); border-radius: var(--radius-md); padding: 1.75rem;">
+          <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">FEV₁ (Forced Expiratory Volume)</h4>
+          <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55;">
+            The volume of air forcefully exhaled in the first second of a forced expiration. A sensitive indicator of bronchial caliber and airflow limitation.
+          </p>
+        </div>
+
+        <div style="background: var(--bg-app); border: 1px solid var(--border-card); border-radius: var(--radius-md); padding: 1.75rem;">
+          <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">FVC (Forced Vital Capacity)</h4>
+          <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55;">
+            The maximum volume of air exhaled forcefully and rapidly following full inspiratory vital capacity. Reflects overall accessible lung volume.
+          </p>
+        </div>
+
+        <div style="background: var(--bg-app); border: 1px solid var(--border-card); border-radius: var(--radius-md); padding: 1.75rem;">
+          <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">FEV₁ / FVC Ratio</h4>
+          <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55;">
+            The fraction of vital capacity delivered in the first second. A post-bronchodilator ratio &lt; 0.70 (70%) establishes persistent airflow obstruction under GOLD criteria.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="2" y="4" width="20" height="16" rx="4" stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <polygon points="12 7 16 12 12 17 8 12" fill="currentColor"/>
+            </svg>
+            <span>LungGuard AI</span>
+          </div>
+          <p>
+            An intelligent clinical AI system engineered for thoracic CT image classification and pulmonary health evaluation using deep transfer learning.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Project Overview & Content</h5>
+          <div class="footer-content-box">
+            <p>
+              LungGuard AI integrates computerized tomography analysis with interactive spirometry assessments to aid early detection of pulmonary malignancies.
+            </p>
+            <p>
+              Developed as an advanced academic research prototype by <strong>Harsha</strong>, bridging cutting-edge deep learning with practical clinical diagnostics.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Contact Details</h5>
+          <ul class="footer-contact-list">
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <div>
+                <strong>Developer / Researcher</strong>
+                <span>Harsha (AI & Deep Learning)</span>
+              </div>
+            </li>
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <div>
+                <strong>Email Address</strong>
+                <a href="mailto:harsha.lungguard.ai@gmail.com">harsha.lungguard.ai@gmail.com</a>
+              </div>
+            </li>
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <div>
+                <strong>Phone / Contact</strong>
+                <a href="tel:+919177000000">+91 91770 XXXXX</a>
+              </div>
+            </li>
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div>
+                <strong>Location & Affiliation</strong>
+                <span>India • AI & Medical Imaging Research</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 LungGuard AI. Medical Machine Learning Research Demonstration.</p>
+        <p>Times New Roman Clinical Edition • Fully Operational</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js?v=20261115b"></script>
+  <script>
+    // Tab Switching
+    function switchBreathingTab(tab) {
+      const guidedBtn = document.getElementById('tab-guided-btn');
+      const spiroBtn = document.getElementById('tab-spirometry-btn');
+      const guidedContent = document.getElementById('tab-guided-content');
+      const spiroContent = document.getElementById('tab-spirometry-content');
+
+      if (tab === 'guided') {
+        guidedBtn.classList.add('active');
+        spiroBtn.classList.remove('active');
+        guidedContent.style.display = 'block';
+        spiroContent.style.display = 'none';
+      } else {
+        spiroBtn.classList.add('active');
+        guidedBtn.classList.remove('active');
+        spiroContent.style.display = 'block';
+        guidedContent.style.display = 'none';
+      }
+    }
+
+    // Breathing Animation Engine
+    let exerciseActive = false;
+    let exerciseInterval = null;
+    let exerciseSeconds = 0;
+    let completedCycles = 0;
+    const PHASES = [
+      { name: 'Inhale', duration: 4, cssClass: 'inhale' },
+      { name: 'Hold', duration: 4, cssClass: 'hold' },
+      { name: 'Exhale', duration: 4, cssClass: 'exhale' }
+    ];
+    let currentPhaseIndex = 0;
+    let phaseSecondsRemaining = 4;
+
+    function toggleBreathingExercise() {
+      if (exerciseActive) {
+        stopBreathingExercise();
+      } else {
+        startBreathingExercise();
+      }
+    }
+
+    function startBreathingExercise() {
+      exerciseActive = true;
+      document.getElementById('breath-btn-label').textContent = 'Pause Exercise';
+      document.getElementById('btn-start-breathing').style.background = 'var(--class-benign)';
+
+      currentPhaseIndex = 0;
+      phaseSecondsRemaining = PHASES[0].duration;
+      updateOrbUI();
+
+      exerciseInterval = setInterval(() => {
+        exerciseSeconds++;
+        phaseSecondsRemaining--;
+
+        // Update elapsed time display
+        const m = Math.floor(exerciseSeconds / 60).toString().padStart(2, '0');
+        const s = (exerciseSeconds % 60).toString().padStart(2, '0');
+        document.getElementById('metric-elapsed').textContent = `${m}:${s}`;
+
+        if (phaseSecondsRemaining <= 0) {
+          currentPhaseIndex = (currentPhaseIndex + 1) % PHASES.length;
+          if (currentPhaseIndex === 0) {
+            completedCycles++;
+            document.getElementById('metric-cycles').textContent = completedCycles;
+          }
+          phaseSecondsRemaining = PHASES[currentPhaseIndex].duration;
+        }
+
+        updateOrbUI();
+      }, 1000);
+    }
+
+    function stopBreathingExercise() {
+      exerciseActive = false;
+      clearInterval(exerciseInterval);
+      document.getElementById('breath-btn-label').textContent = 'Resume Exercise';
+      document.getElementById('btn-start-breathing').style.background = 'var(--primary)';
+    }
+
+    function resetBreathingExercise() {
+      stopBreathingExercise();
+      exerciseSeconds = 0;
+      completedCycles = 0;
+      currentPhaseIndex = 0;
+      phaseSecondsRemaining = 0;
+
+      document.getElementById('metric-elapsed').textContent = '00:00';
+      document.getElementById('metric-cycles').textContent = '0';
+      document.getElementById('breath-btn-label').textContent = 'Start Guided Exercise';
+      document.getElementById('breath-phase-text').textContent = 'Ready';
+      document.getElementById('breath-timer-text').textContent = '0s';
+
+      const orb = document.getElementById('breath-orb');
+      orb.className = 'breath-orb rest';
+    }
+
+    function updateOrbUI() {
+      const phase = PHASES[currentPhaseIndex];
+      const orb = document.getElementById('breath-orb');
+      orb.className = `breath-orb ${phase.cssClass}`;
+      document.getElementById('breath-phase-text').textContent = phase.name;
+      document.getElementById('breath-timer-text').textContent = `${phaseSecondsRemaining}s`;
+    }
+
+    // Breath Hold Timer Engine
+    let holdActive = false;
+    let holdStartTime = 0;
+    let holdInterval = null;
+    let sustainedHoldSec = 0.0;
+
+    function toggleHoldTimer() {
+      const btn = document.getElementById('btn-hold-toggle');
+      const display = document.getElementById('hold-timer-display');
+
+      if (!holdActive) {
+        holdActive = true;
+        holdStartTime = performance.now();
+        btn.textContent = 'Release & Stop';
+        btn.style.background = 'var(--class-malignant)';
+
+        holdInterval = setInterval(() => {
+          const elapsed = (performance.now() - holdStartTime) / 1000.0;
+          sustainedHoldSec = elapsed;
+          display.textContent = `${elapsed.toFixed(1)}s`;
+        }, 100);
+      } else {
+        holdActive = false;
+        clearInterval(holdInterval);
+        btn.textContent = 'Start Hold';
+        btn.style.background = 'var(--primary)';
+      }
+    }
+
+    // Save Guided Assessment to DB
+    async function saveGuidedAssessment() {
+      const btn = document.getElementById('btn-save-guided');
+      const alertEl = document.getElementById('guided-save-alert');
+      btn.disabled = true;
+      btn.textContent = 'Saving Record...';
+
+      try {
+        const payload = {
+          assessment_type: 'guided_exercise',
+          duration_sec: exerciseSeconds,
+          completed_cycles: completedCycles,
+          breath_hold_sec: parseFloat(sustainedHoldSec.toFixed(1)),
+          notes: `Completed ${completedCycles} cycles. Sustained breath hold: ${sustainedHoldSec.toFixed(1)}s.`
+        };
+
+        const res = await fetch('/api/v1/breathing/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        alertEl.style.display = 'block';
+        alertEl.innerHTML = `<strong>Assessment Saved!</strong> Record ID: <code>${data.test_id}</code>. <a href="dashboard.html" style="text-decoration: underline; font-weight: 700;">View in Dashboard</a>.`;
+        btn.textContent = 'Assessment Saved to History';
+      } catch (err) {
+        alertEl.style.display = 'block';
+        alertEl.style.background = 'var(--class-malignant-bg)';
+        alertEl.style.color = 'var(--class-malignant)';
+        alertEl.textContent = 'Failed to save record: ' + err.message;
+        btn.textContent = 'Retry Save';
+        btn.disabled = false;
+      }
+    }
+
+    // Auto-calculate FEV1/FVC Ratio
+    function calculatePftRatio() {
+      const fev1 = parseFloat(document.getElementById('pft-fev1').value);
+      const fvc = parseFloat(document.getElementById('pft-fvc').value);
+      const ratioInput = document.getElementById('pft-ratio');
+
+      if (!isNaN(fev1) && !isNaN(fvc) && fvc > 0) {
+        const ratio = (fev1 / fvc) * 100.0;
+        ratioInput.value = ratio.toFixed(1);
+      }
+    }
+
+    // Handle Spirometry Form Submission
+    async function handleSpirometrySubmit(e) {
+      e.preventDefault();
+      const fev1 = parseFloat(document.getElementById('pft-fev1').value);
+      const fvc = parseFloat(document.getElementById('pft-fvc').value);
+      const ratio = parseFloat(document.getElementById('pft-ratio').value);
+      const pef = parseFloat(document.getElementById('pft-pef').value) || null;
+      const notes = document.getElementById('pft-notes').value || '';
+
+      const titleEl = document.getElementById('spiro-result-title');
+      const descEl = document.getElementById('spiro-result-desc');
+      const badgeEl = document.getElementById('spiro-badge');
+      const successBox = document.getElementById('spiro-success-box');
+
+      try {
+        const payload = {
+          assessment_type: 'spirometry_pft',
+          fev1: fev1,
+          fvc: fvc,
+          ratio: ratio,
+          pef: pef,
+          notes: notes
+        };
+
+        const res = await fetch('/api/v1/breathing/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        titleEl.textContent = data.result_title;
+        descEl.textContent = data.interpretation;
+        badgeEl.textContent = data.result_title.includes('Normal') ? 'Normal Spirometry' : 'Airflow Limitation';
+        badgeEl.className = data.result_title.includes('Normal') ? 'table-badge verified' : 'table-badge experimental';
+
+        successBox.style.display = 'block';
+        successBox.innerHTML = `<strong>Spirometry Saved!</strong> Test ID: <code>${data.test_id}</code>. <a href="dashboard.html" style="text-decoration: underline; font-weight: 700;">View in Testing History</a>.`;
+      } catch (err) {
+        alert('Failed to save spirometry record: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>

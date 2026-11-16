@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lung Cancer Testing Studio — LungGuard AI</title>
+  
+  <!-- Typography: Times New Roman via style.css -->
+  <link rel="stylesheet" href="css/style.css?v=20261116L" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230284C7'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z'/></svg>" />
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="nav-left">
+        <a href="index.html" class="brand-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="4" stroke="currentColor" stroke-width="2.2" fill="none"/>
+            <polygon points="12 7 16 12 12 17 8 12" fill="currentColor"/>
+          </svg>
+          <span>LungGuard AI</span>
+        </a>
+      </div>
+
+      <nav class="nav-menu">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="cancer-testing.html" class="nav-link active">Lung Cancer Testing</a></li>
+          <li><a href="breathing-test.html" class="nav-link">Lung Breathing Test</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+          <li><a href="index.html#about" class="nav-link">About Us</a></li>
+          <li><a href="index.html#footer" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Clean Light / Dark Theme">☀️ Light</button>
+        <a href="cancer-testing.html" class="btn-nav" onclick="if(window.resetStudio) resetStudio();">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+          <span>New AI Test</span>
+        </a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">
+          &#9776;
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="section" style="padding: 3.5rem 0 2rem 0; background: radial-gradient(circle at 90% 20%, rgba(2, 132, 199, 0.08) 0%, transparent 45%), var(--bg-card); border-bottom: 1px solid var(--border-subtle);">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem;">
+        <div>
+          <h1 style="font-size: 2.3rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">
+            Lung Cancer Detection & Clinical Assessment
+          </h1>
+          <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 720px; line-height: 1.6;">
+            Upload axial thoracic CT scans for automated neural classification into <strong>Lung Cancer Detected</strong>, <strong>No Lung Cancer Detected</strong>, or <strong>Inconclusive</strong>. All records are automatically saved to your LungGuard Dashboard.
+          </p>
+        </div>
+        <div>
+          <a href="dashboard.html" class="btn-secondary" style="font-size: 0.92rem; padding: 0.6rem 1.25rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Review Testing History
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Analysis Studio -->
+  <section class="section" style="padding: 3rem 0 5rem 0;">
+    <div class="container">
+      <div class="studio-wrapper">
+        <div class="studio-grid">
+          <!-- Left Column: Upload & Controls -->
+          <div class="dropzone-container">
+            <div class="dropzone" id="dropzone">
+              <input type="file" id="file-input" accept="image/jpeg,image/png,image/jpg,.dcm,application/dicom" style="display: none;" />
+              <div class="dropzone-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <h4>Drag & Drop Chest CT Scan Here</h4>
+              <p>or click to browse your local files</p>
+              <button type="button" class="dropzone-browse-btn">Select CT Scan File</button>
+              <span class="file-specs">Supports Thoracic CT (JPEG & PNG) • Max 10 MB • Grayscale Only</span>
+            </div>
+
+            <!-- Preview Mode -->
+            <div class="preview-container" id="preview-container">
+              <img id="preview-image" src="" alt="CT Scan Preview" />
+              <button class="preview-remove-btn" id="remove-preview-btn" title="Remove image">&times;</button>
+              
+              <!-- Scanning Animation Overlay -->
+              <div class="scanning-overlay" id="scanning-overlay">
+                <div class="scanning-laser"></div>
+              </div>
+            </div>
+
+            <!-- Benchmark Samples Selector -->
+            <div class="benchmark-quick-select">
+              <h5>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Or Test With Benchmark IQ-OTH CT Scan:
+              </h5>
+              <div class="benchmark-chips" id="benchmark-chips">
+                <!-- Chips injected dynamically by JS -->
+              </div>
+            </div>
+
+            <!-- Analyze Action Button -->
+            <button class="btn-analyze" id="analyze-btn" disabled>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              <span>Run Lung Cancer Detection</span>
+            </button>
+          </div>
+
+          <!-- Right Column: Prediction Results -->
+          <div class="results-container">
+            <!-- Error Banner -->
+            <div class="error-alert" id="error-alert">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <div id="error-text">An unexpected error occurred.</div>
+            </div>
+
+            <!-- Awaiting Image Placeholder -->
+            <div class="results-placeholder" id="results-placeholder">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <h4>No CT Image Selected</h4>
+              <p>Upload an axial chest CT scan or pick a verified benchmark scan above to initiate automated cancer screening.</p>
+            </div>
+
+            <!-- Active Results Card -->
+            <div class="active-results" id="active-results">
+              <div class="result-card-main">
+                <div class="result-header">
+                  <span>AI Diagnostic Screening Output</span>
+                  <span class="table-badge verified" id="test-id-badge">Test Saved to Database</span>
+                </div>
+
+                <div class="prediction-highlight">
+                  <div>
+                    <span style="font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase;">Detection Result</span>
+                    <div class="pred-class-large normal" id="pred-class-text">No Lung Cancer Detected</div>
+                  </div>
+                  <div class="confidence-badge">
+                    <div class="confidence-value" id="confidence-value">0.0%</div>
+                    <span class="confidence-label">Model Confidence</span>
+                  </div>
+                </div>
+
+                <!-- Probabilities Distribution -->
+                <div class="probabilities-breakdown">
+                  <!-- Normal Bar -->
+                  <div class="prob-row">
+                    <div class="prob-labels">
+                      <span>Normal Parenchyma</span>
+                      <span id="prob-normal-val">0.0%</span>
+                    </div>
+                    <div class="prob-bar-track">
+                      <div class="prob-bar-fill normal" id="prob-normal-fill"></div>
+                    </div>
+                  </div>
+
+                  <!-- Benign Bar -->
+                  <div class="prob-row">
+                    <div class="prob-labels">
+                      <span>Benign Nodule (Non-Cancerous)</span>
+                      <span id="prob-benign-val">0.0%</span>
+                    </div>
+                    <div class="prob-bar-track">
+                      <div class="prob-bar-fill benign" id="prob-benign-fill"></div>
+                    </div>
+                  </div>
+
+                  <!-- Malignant Bar -->
+                  <div class="prob-row">
+                    <div class="prob-labels">
+                      <span>Malignant Carcinoma (Lung Cancer)</span>
+                      <span id="prob-malignant-val">0.0%</span>
+                    </div>
+                    <div class="prob-bar-track">
+                      <div class="prob-bar-fill malignant" id="prob-malignant-fill"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Metadata Strip -->
+                <div class="inference-meta-strip">
+                  <span>Latency: <strong id="inference-time-val">0 ms</strong></span>
+                  <span>Input Shape: <strong id="image-dim-val">224 × 224 × 3</strong></span>
+                </div>
+
+                <!-- Structured Clinical Assessment -->
+                <div class="clinical-report-box" id="clinical-report-box" style="margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.88rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: var(--text-dim); text-transform: uppercase; font-size: 0.75rem; font-weight: 700;">Cancer Status</span>
+                    <strong id="cancer-status-val" style="color: var(--text-main);">Negative for Malignancy</strong>
+                  </div>
+
+                  <!-- Stage Classification (Shown only if cancer is detected) -->
+                  <div id="stage-classification-row" style="display: none; justify-content: space-between; align-items: flex-start; gap: 1rem;">
+                    <span style="color: var(--text-dim); text-transform: uppercase; font-size: 0.75rem; font-weight: 700; white-space: nowrap;">Cancer Stage</span>
+                    <div style="text-align: right;">
+                      <span class="table-badge experimental" id="cancer-stage-val" style="font-size: 0.78rem;">Stage Classification Requires Further Clinical Evaluation</span>
+                      <p id="cancer-stage-note" style="margin-top: 0.35rem; font-size: 0.76rem; color: var(--text-muted); max-width: 380px;">Definitive TNM staging requires PET-CT avidity, histological biopsy grade, and full-body metastatic imaging.</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <span style="color: var(--text-dim); text-transform: uppercase; font-size: 0.75rem; font-weight: 700; display: block; margin-bottom: 0.25rem;">Abnormality Description</span>
+                    <p id="abnormality-desc-val" style="color: var(--text-muted); line-height: 1.5; margin: 0;"></p>
+                  </div>
+
+                  <div>
+                    <span style="color: var(--text-dim); text-transform: uppercase; font-size: 0.75rem; font-weight: 700; display: block; margin-bottom: 0.25rem;">Scan Analysis Summary</span>
+                    <p id="scan-summary-val" style="color: var(--text-muted); line-height: 1.5; margin: 0;"></p>
+                  </div>
+
+                  <div style="background: var(--bg-card-hover); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border-left: 3px solid var(--primary);">
+                    <span style="color: var(--primary); text-transform: uppercase; font-size: 0.75rem; font-weight: 700; display: block; margin-bottom: 0.25rem;">Recommended Next Steps</span>
+                    <p id="next-steps-val" style="color: var(--text-main); font-size: 0.84rem; line-height: 1.5; margin: 0;"></p>
+                  </div>
+                </div>
+
+                <!-- Report Action Buttons -->
+                <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                  <button class="btn-primary" id="btn-print-report" style="flex: 1; justify-content: center; font-size: 0.9rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    Print / Save PDF Report
+                  </button>
+                  <a href="dashboard.html" class="btn-secondary" style="flex: 1; justify-content: center; font-size: 0.9rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                    View in Dashboard
+                  </a>
+                </div>
+              </div>
+
+              <!-- Mandatory Medical Disclaimer -->
+              <div class="medical-disclaimer-callout">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <p>
+                  <strong>Research Prototype Notice:</strong> Model confidence is an algorithmic probability based on convolutional pattern recognition, <em>not clinical diagnostic certainty</em>. A negative AI result never rules out cancer; a positive result requires urgent formal histological confirmation.
+                </p>
+              </div>
+
+              <button class="btn-secondary" id="reset-analysis-btn" style="width: 100%; justify-content: center;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
+                Analyze Another Image
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="2" y="4" width="20" height="16" rx="4" stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <polygon points="12 7 16 12 12 17 8 12" fill="currentColor"/>
+            </svg>
+            <span>LungGuard AI</span>
+          </div>
+          <p>
+            An intelligent clinical AI system engineered for thoracic CT image classification and pulmonary health evaluation using deep transfer learning.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Project Overview & Content</h5>
+          <div class="footer-content-box">
+            <p>
+              LungGuard AI integrates computerized tomography analysis with interactive spirometry assessments to aid early detection of pulmonary malignancies.
+            </p>
+            <p>
+              Developed as an advanced academic research prototype by <strong>Harsha</strong>, bridging cutting-edge deep learning with practical clinical diagnostics.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Contact Details</h5>
+          <ul class="footer-contact-list">
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <div>
+                <strong>Developer / Researcher</strong>
+                <span>Harsha (AI & Deep Learning)</span>
+              </div>
+            </li>
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <div>
+                <strong>Email Address</strong>
+                <a href="mailto:harsha.lungguard.ai@gmail.com">harsha.lungguard.ai@gmail.com</a>
+              </div>
+            </li>
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <div>
+                <strong>Phone / Contact</strong>
+                <a href="tel:+919177000000">+91 91770 XXXXX</a>
+              </div>
+            </li>
+            <li class="footer-contact-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div>
+                <strong>Location & Affiliation</strong>
+                <span>India • AI & Medical Imaging Research</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 LungGuard AI. Medical Machine Learning Research Demonstration.</p>
+        <p>Times New Roman Clinical Edition • Fully Operational</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="js/app.js?v=20261116h"></script>
+  <script>
+    // Add print report handler for cancer testing page
+    document.addEventListener('DOMContentLoaded', () => {
+      const printBtn = document.getElementById('btn-print-report');
+      if (printBtn) {
+        printBtn.addEventListener('click', () => {
+          const activeResults = document.getElementById('active-results');
+          if (!activeResults || activeResults.style.display === 'none') {
+            alert('Please select or upload a CT scan and click "Run AI Cancer Diagnosis" first to generate your report.');
+            return;
+          }
+          window.print();
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "benign-1",
+    "filename": "bengin_case_(1).jpg",
+    "class_label": "Benign",
+    "title": "IQ-OTH Benign Case 01",
+    "description": "Well-circumscribed nodular density with smooth margins and non-invasive architectural profile from the IQ-OTH-NCCD dataset.",
+    "relative_path": "assets/sample_scans/benign/bengin_case_(1).jpg"
+  },
+  {
+    "id": "benign-2",
+    "filename": "bengin_case_(10).jpg",
+    "class_label": "Benign",
+    "title": "IQ-OTH Benign Case 10",
+    "description": "Focal pulmonary nodular opacity showing encapsulated contours without signs of local parenchymal infiltration.",
+    "relative_path": "assets/sample_scans/benign/bengin_case_(10).jpg"
+  },
+  {
+    "id": "malignant-1",
+    "filename": "malignant_case_(1).jpg",
+    "class_label": "Malignant",
+    "title": "IQ-OTH Malignant Case 01",
+    "description": "Irregular soft-tissue lesion displaying spiculated architectural margins, peripheral attenuation, and parenchymal invasion.",
+    "relative_path": "assets/sample_scans/malignant/malignant_case_(1).jpg"
+  },
+  {
+    "id": "malignant-2",
+    "filename": "malignant_case_(10).jpg",
+    "class_label": "Malignant",
+    "title": "IQ-OTH Malignant Case 10",
+    "description": "Dense non-uniform lesion exhibiting lobulated contour and invasive borders characteristic of pulmonary neoplastic formation.",
+    "relative_path": "assets/sample_scans/malignant/malignant_case_(10).jpg"
+  },
+  {
+    "id": "normal-1",
+    "filename": "normal_case_(1).jpg",
+    "class_label": "Normal",
+    "title": "IQ-OTH Normal Case 01",
+    "description": "Clear lung parenchymal attenuation, symmetric bronchovascular branching, and intact mediastinal/pleural boundaries without focal opacities.",
+    "relative_path": "assets/sample_scans/normal/normal_case_(1).jpg"
+  },
+  {
+    "id": "normal-2",
+    "filename": "normal_case_(10).jpg",
+    "class_label": "Normal",
+    "title": "IQ-OTH Normal Case 10",
+    "description": "Normal radiologic pattern with clear alveolar aeration, patent airway tracts, and absence of consolidation or nodular lesions.",
+    "relative_path": "assets/sample_scans/normal/normal_case_(10).jpg"
+  }
+]

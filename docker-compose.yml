@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  lungguard-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lungguard_ai_app
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - MODEL_PATH=models/LungGuard_AI_Final.keras
+      - CORS_ORIGINS=*
+    volumes:
+      # Mount models folder to supply the .keras file without rebuilding container
+      - ./models:/app/models
+      - ./assets:/app/assets
+    restart: unless-stopped

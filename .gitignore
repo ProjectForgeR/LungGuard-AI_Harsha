@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Large model binaries
+models/*.h5
+!models/model_metadata.json
+!models/verify_model.py
+!models/LungGuard_AI_Final.keras
+
+# Runtime data & SQLite databases
+data/*.db
+data/*.db-shm
+data/*.db-wal
+data/uploads/*
+!data/uploads/.gitkeep
+assets/uploads/*
+frontend/assets/uploads/*
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Temporary / OS files
+.DS_Store
+Thumbs.db
+*.log
+
+# Pytest & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
